@@ -4,9 +4,9 @@
     :cart="cart"
     :cartQty="cartQty"
     :cartTotal="cartTotal"
-    :maximum.sync="maximum"
+    :maximum="maximum"
     :products="products"
-    :sliderStatus="style.sliderStatus"
+    :sliderStatus="sliderStatus"
     @toggle="toggleSliderStatus"
     @add="addItem"
     @delete="deleteItem"></router-view>
@@ -24,7 +24,6 @@ export default {
       sliderStatus: false
     }
   },
-
   mounted: function () {
         fetch('https://hplussport.com/api/products/order/price')
             .then(response => response.json())
