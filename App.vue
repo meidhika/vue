@@ -1,30 +1,21 @@
 <template>
   <div id="app" class="container mt-5">
-    <checkout
-    :cart="cart"
-    :cartTotal="cartTotal"
-    @add="addItem"
-    @delete="deleteItem"></checkout>
-
-    <products
+    <router-view
     :cart="cart"
     :cartQty="cartQty"
     :cartTotal="cartTotal"
     :maximum.sync="maximum"
     :products="products"
-    :sliderStatus="sliderStatus"
+    :sliderStatus="style.sliderStatus"
     @toggle="toggleSliderStatus"
     @add="addItem"
-    @delete="deleteItem"></products>
+    @delete="deleteItem"></router-view>
   </div>
 </template>
 
 <script>
-import Checkout from "./components/Checkout.vue";
-import Products from "./components/Products.vue";
-
 export default {
-  name: "app",
+  name: "App",
   data: function(){
     return {
       maximum: 50,
@@ -33,10 +24,7 @@ export default {
       sliderStatus: false
     }
   },
-  components: {
-    Checkout,
-    Products
-  },
+
   mounted: function () {
         fetch('https://hplussport.com/api/products/order/price')
             .then(response => response.json())
@@ -58,11 +46,11 @@ export default {
                 qty = qty + (this.cart[key].qty);
             }
             return qty;
-        },
+        }
     },
     methods:{
       toggleSliderStatus:function(){
-        this.sliderStatus =!this.sliderStatus;
+        this.sliderStatus =!this.syle.sliderStatus;
       },
       addItem: function (product) {
             let productIndex;
@@ -79,14 +67,14 @@ export default {
             } else {
                 this.cart.push({ product: product, qty: 1 });
             }
-        },
+          },
         deleteItem: function (key) {
             if (this.cart[key].qty > 1) {
                 this.cart[key].qty--;
             } else {
                 this.cart.splice(key, 1);
             }
-        },
+        }
     }
-};
+  };
 </script>
